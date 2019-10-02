@@ -1,0 +1,64 @@
+apply plugin: 'com.jfrog.bintray'
+
+// Set default
+
+def GROUP_ID= "dev.wengelef"
+def ARTIFACT_ID= "validate"
+
+def BINTRAY_REPOSITORY= "validate"
+def BINTRAY_ORGINIZATION= "wengelef"
+
+def ISSUE_URL= "https://github.com/wengelef/validate/issues"
+def SITE_URL= "https://github.com/wengelef/validate"
+def VCS_URL= "https://github.com/wengelef/validate.git"
+def LIBRARY_VERSION_NAME="0.1.1"
+
+group GROUP_ID
+version LIBRARY_VERSION_NAME
+
+publishing.publications {
+    Publication(MavenPublication) {
+        from components.java
+        groupId GROUP_ID
+        artifactId ARTIFACT_ID
+        version LIBRARY_VERSION_NAME
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    publish = false
+
+    publications = ['Publication']
+
+    pkg {
+        repo = BINTRAY_REPOSITORY
+        name = ARTIFACT_ID
+        userOrg = BINTRAY_ORGINIZATION
+        licenses = ['Apache-2.0']
+        vcsUrl = VCS_URL
+        websiteUrl = SITE_URL
+        issueTrackerUrl = ISSUE_URL
+
+        version {
+            name = LIBRARY_VERSION_NAME
+            vcsTag = LIBRARY_VERSION_NAME
+            released = new Date()
+        }
+    }
+}
+
+bintrayUpload.doFirst {
+    publications = publishing.publications.collect {
+        it.name
+    }.findAll {
+        it != "kotlinMultiplatform"
+    }
+}
+
+bintrayUpload.dependsOn publishToMavenLocal
