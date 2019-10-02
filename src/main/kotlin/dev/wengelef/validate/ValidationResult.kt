@@ -1,4 +1,4 @@
-package util.validate
+package dev.wengelef.validate
 
 sealed class ValidationResult<E, T> {
     class Valid<E, T>(val value: T) : ValidationResult<E, T>()

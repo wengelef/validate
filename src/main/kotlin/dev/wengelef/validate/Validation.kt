@@ -1,4 +1,4 @@
-package util.validate
+package dev.wengelef.validate
 
 import java.lang.IllegalStateException
 

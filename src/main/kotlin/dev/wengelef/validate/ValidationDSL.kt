@@ -1,4 +1,4 @@
-package util.validate
+package dev.wengelef.validate
 
 import kotlin.reflect.KProperty1
 

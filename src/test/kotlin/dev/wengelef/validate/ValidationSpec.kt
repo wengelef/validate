@@ -1,4 +1,4 @@
-package util
+package dev.wengelef.validate
 
 import io.kotlintest.matchers.collections.shouldContain
 import io.kotlintest.matchers.collections.shouldContainExactly
@@ -6,8 +6,6 @@ import io.kotlintest.matchers.types.shouldBeTypeOf
 import io.kotlintest.should
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
-import util.validate.ValidationResult
-import util.validate.validate
 
 class ValidationSpec : FreeSpec() {
 
