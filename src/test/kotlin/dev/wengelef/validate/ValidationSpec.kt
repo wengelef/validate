@@ -11,8 +11,8 @@ class ValidationSpec : FreeSpec() {
 
     init {
         "Valid Data" should {
-            "have no Errors" {
-                val result: ValidationResult<ValidationError, ComplexData> = validate(complexData) {
+            "have no Errors and be valid" {
+                val validate = validate<ValidationError, ComplexData> {
                     ComplexData::stringValue.validate(stringValError) { it.isNotBlank() }
                     ComplexData::intValue.validate(intValError) { it == 20 }
                     ComplexData::floatValue.validate(floatValError) { it == 5.5f }
@@ -24,34 +24,19 @@ class ValidationSpec : FreeSpec() {
                     }
                 }
 
-                result.shouldBeTypeOf<ValidationResult.Valid<ValidationError, ComplexData>>()
-                result.fold({}) { value -> value shouldBe complexData }
-            }
-
-            "ext fun should have no Errors" {
-                val validated = validate<ValidationError, ComplexData> {
-                    ComplexData::stringValue.validate(stringValError) { it.isNotBlank() }
-                    ComplexData::intValue.validate(intValError) { it == 20 }
-                    ComplexData::floatValue.validate(floatValError) { it == 5.5f }
-                    ComplexData::complexValue.validate {
-                        ComplexNested::stringValue.validate(nestedStringError) { it.toInt() == 18 }
-                        ComplexNested::complexValue.validate {
-                            ComplexNested1::intValue.validate(nested1IntError) { it < 0 }
-                        }
-                    }
-                }
-
-                complexData.validated()
+                complexData.validate()
                     .fold(
                         { },
                         { value -> value shouldBe complexData }
                     )
+
+                complexData.validate().isValid() shouldBe true
             }
         }
 
         "Invalid Data" should {
-            "have Errors" {
-                val result: ValidationResult<ValidationError, ComplexData> = validate(complexData) {
+            "should have all errors and not be valid" {
+                val validate = validate<ValidationError, ComplexData> {
                     ComplexData::stringValue.validate(stringValError) { it.isEmpty() }
                     ComplexData::intValue.validate(intValError) { it != 20 }
                     ComplexData::floatValue.validate(floatValError) { it != 5.5f }
@@ -63,35 +48,7 @@ class ValidationSpec : FreeSpec() {
                     }
                 }
 
-                result.shouldBeTypeOf<ValidationResult.Invalid<ValidationError, ComplexData>>()
-                result.fold(
-                    { errors ->
-                        errors shouldContainExactly listOf(
-                            stringValError,
-                            intValError,
-                            floatValError,
-                            nestedStringError,
-                            nested1IntError
-                        )
-                    },
-                    { }
-                )
-            }
-
-            "ext fun should have errors" {
-                val extFun = validate<ValidationError, ComplexData> {
-                    ComplexData::stringValue.validate(stringValError) { it.isEmpty() }
-                    ComplexData::intValue.validate(intValError) { it != 20 }
-                    ComplexData::floatValue.validate(floatValError) { it != 5.5f }
-                    ComplexData::complexValue.validate {
-                        ComplexNested::stringValue.validate(nestedStringError) { it.toInt() == 19 }
-                        ComplexNested::complexValue.validate {
-                            ComplexNested1::intValue.validate(nested1IntError) { it >= 0 }
-                        }
-                    }
-                }
-
-                complexData.extFun()
+                complexData.validate()
                     .fold(
                         { errors ->
                             errors shouldContainExactly listOf(
@@ -104,6 +61,8 @@ class ValidationSpec : FreeSpec() {
                         },
                         { }
                     )
+
+                complexData.validate().isValid() shouldBe false
             }
 
             "Bill" should {
