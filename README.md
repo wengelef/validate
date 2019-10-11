@@ -1,4 +1,4 @@
-# Validate
+# validate
 typesafe Validation DSL
 
 ## Usage
