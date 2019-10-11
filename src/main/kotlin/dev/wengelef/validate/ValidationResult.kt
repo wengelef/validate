@@ -10,4 +10,6 @@ sealed class ValidationResult<E, T> {
             is Invalid -> ifError(errors)
         }
     }
+
+    fun isValid() = this is Valid<E, T>
 }

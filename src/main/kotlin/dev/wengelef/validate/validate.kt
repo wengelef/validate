@@ -1,6 +1,6 @@
 package dev.wengelef.validate
 
-fun <E, T> validate(t: T, f: ValidationDSL<E, T>.() -> Unit): ValidationResult<E, T> {
+private fun <E, T> validate(t: T, f: ValidationDSL<E, T>.() -> Unit): ValidationResult<E, T> {
     return ValidationDSL<E, T>(t).apply(f).validate()
         .let { values ->
             val errors = values.filterIsInstance<Validation.Left<E, T>>()
