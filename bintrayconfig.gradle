@@ -16,23 +16,39 @@ def LIBRARY_VERSION_NAME="0.1.2"
 group GROUP_ID
 version LIBRARY_VERSION_NAME
 
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+// add javadoc/source jar tasks as artifacts
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
 publishing.publications {
     Publication(MavenPublication) {
         from components.java
         groupId GROUP_ID
         artifactId ARTIFACT_ID
         version LIBRARY_VERSION_NAME
+
+        artifact sourcesJar
+        artifact javadocJar
     }
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    user = project.findProperty("bintray_user")
+    key = project.findProperty("bintray_api_key")
 
-    publish = false
+    publish = true
 
     publications = ['Publication']
 

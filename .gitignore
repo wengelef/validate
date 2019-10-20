@@ -17,7 +17,6 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 .kotlintest/
 .gradle/
-gradlew*
 out
-gradle
+!gradle
 local.properties
