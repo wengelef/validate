@@ -52,15 +52,15 @@ blankName.validate()
 ## Download
 gradle
 ```groovy
-implementation 'dev.wengelef:validate:0.1.1'
+implementation 'dev.wengelef:validate:0.1.2'
 ```
 
 maven
 ```xml
 <dependency>
-	<groupId>dev.wengelef</groupId>
-	<artifactId>validate</artifactId>
-	<version>0.1.1</version>
-	<type>pom</type>
+  <groupId>dev.wengelef</groupId>
+  <artifactId>validate</artifactId>
+  <version>0.1.2</version>
+  <type>pom</type>
 </dependency>
 ```
