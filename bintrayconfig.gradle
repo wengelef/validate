@@ -45,8 +45,8 @@ publishing.publications {
 }
 
 bintray {
-    user = project.findProperty("bintray_user")
-    key = project.findProperty("bintray_api_key")
+    user = System.getenv('bintray_user')
+    key = System.getenv('bintray_api_key')
 
     publish = true
 
