@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/wengelef/validate.svg?branch=master)](https://travis-ci.org/wengelef/validate)
+
 # validate
 typesafe Validation DSL
 
