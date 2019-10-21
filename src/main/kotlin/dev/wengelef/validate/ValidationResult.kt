@@ -11,5 +11,12 @@ sealed class ValidationResult<E, T> {
         }
     }
 
+    fun and(f: (T) -> ValidationResult<E, T>): ValidationResult<E, T> {
+        return when (this) {
+            is Invalid -> this
+            is Valid -> f(value)
+        }
+    }
+
     fun isValid() = this is Valid<E, T>
 }
