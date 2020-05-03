@@ -24,9 +24,22 @@ class ValidationDSL<E, T>(private val instance: T) {
         validations.addAll(subValidation)
     }
 
-    fun isValid() = validations.none { it is Validation.Left }
+    //fun isValid() = validations.none { it is Validation.Left }
 
-    fun validate(): List<Validation<E, T>> {
+    private fun validate(): List<Validation<E, T>> {
         return validations
+    }
+
+    fun toResult(): ValidationResult<E, T> {
+        return validations
+            .let { values ->
+                val errors = values.filterIsInstance<Validation.Left<E, T>>()
+
+                if (errors.isEmpty()) {
+                    ValidationResult.Valid(values.first { it is Validation.Right }.right())
+                } else {
+                    ValidationResult.Invalid(errors.map { value -> value.left() })
+                }
+            }
     }
 }
