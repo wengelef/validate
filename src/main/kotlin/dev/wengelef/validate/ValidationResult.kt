@@ -11,6 +11,13 @@ sealed class ValidationResult<E, T> {
         }
     }
 
+    fun <E2, T2> flatMap(map: (T) -> ValidationResult<E2, T2>): ValidationResult<E2, T2> {
+        return when (this) {
+            is Valid -> map(value)
+            is Invalid -> this as ValidationResult<E2, T2>
+        }
+    }
+
     fun and(f: (T) -> ValidationResult<E, T>): ValidationResult<E, T> {
         return when (this) {
             is Invalid -> this
