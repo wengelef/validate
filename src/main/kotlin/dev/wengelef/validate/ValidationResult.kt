@@ -25,5 +25,10 @@ sealed class ValidationResult<E, T> {
         }
     }
 
+    fun <T2> map(ifInvalid: (E) -> T2, ifValid: (T) -> T2): T2 = when (this) {
+        is Valid -> ifValid(value)
+        is Invalid -> ifInvalid(errors.first())
+    }
+
     fun isValid() = this is Valid<E, T>
 }
