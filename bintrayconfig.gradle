@@ -11,7 +11,7 @@ def BINTRAY_ORGINIZATION= "wengelef"
 def ISSUE_URL= "https://github.com/wengelef/validate/issues"
 def SITE_URL= "https://github.com/wengelef/validate"
 def VCS_URL= "https://github.com/wengelef/validate.git"
-def LIBRARY_VERSION_NAME="0.1.3"
+def LIBRARY_VERSION_NAME="0.1.4"
 
 group GROUP_ID
 version LIBRARY_VERSION_NAME

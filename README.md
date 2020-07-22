@@ -60,7 +60,7 @@ maven
 <dependency>
   <groupId>dev.wengelef</groupId>
   <artifactId>validate</artifactId>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
   <type>pom</type>
 </dependency>
 ```
