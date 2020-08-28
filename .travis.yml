@@ -8,7 +8,7 @@ before_install:
     wget -qO - https://api.bintray.com/users/sobolevn/keys/gpg/public.key | sudo apt-key add -
     sudo apt-get update && sudo apt-get install git-secret
 
-  - echo $GPG_PRIVATE_KEY | tr ',' '\n' > ./private_key.gpg
+  - echo $GPG_PRIVATE_KEY > ./private_key.gpg
 
   - gpg --import ./private_key.gpg
 
