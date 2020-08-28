@@ -22,3 +22,4 @@ out
 local.properties
 .gitsecret/keys/random_seed
 !*.secret
+bintray.apikey
