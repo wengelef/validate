@@ -20,3 +20,7 @@ gradle-app.setting
 out
 !gradle
 local.properties
+.gitsecret/keys/random_seed
+!*.secret
+bintray.apikey
+bintray.user
