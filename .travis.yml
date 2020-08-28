@@ -3,7 +3,7 @@ language: java
 before_install:
   - chmod -R +x src
   - chmod +x gradlew
-  - sudo apt-get install git-secret
+  - sudo apt-get -y install git-secret
 
 script: ./gradlew clean build
 
